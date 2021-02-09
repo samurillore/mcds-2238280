@@ -16,9 +16,9 @@ class CreateCategoriesTable extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();//esto hace que cada nombre sea único
-            $table->string('image');
-            $table->string('borrar');
-            $table-> text('description');
+            $table->string('image')->default('imgs/no-category.png');
+            $table->string('borrar')->default('na');
+            $table-> text('description')->default('na');
             $table->timestamps();
         });
     }

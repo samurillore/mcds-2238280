@@ -16,7 +16,7 @@ class CreateGamesTable extends Migration
         Schema::create('games', function (Blueprint $table) {
             $table->id();
             $table->text('name');
-            $table->text('image');
+            $table->text('image')->default('imgs/no-games.png');;
             $table->text('description');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on ('users');            
