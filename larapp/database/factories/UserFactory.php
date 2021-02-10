@@ -5,6 +5,9 @@ namespace Database\Factories;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use Faker\Generator as Faker;
+use App\Post;
+use Illuminate\Http\File;
 
 class UserFactory extends Factory
 {
@@ -22,12 +25,30 @@ class UserFactory extends Factory
      */
     public function definition()
     {
+        $gender="Female";
+        //$image = $faker->image();
+        //$imageFile = new File($image);
+        if ($gender=="Male") {
+            $name="firstNameMale";
+            # code...
+        }
+        else
+        {
+            $name="firstNameFemale";
+        }
+
         return [
-            'name' => $this->faker->name,
-            'email' => $this->faker->unique()->safeEmail,
+            'fullname'          => $this->faker->$name,
+            'email'             => $this->faker->unique()->safeEmail,
+            'phone'             => $this->faker->numberBetween(3101000000, 3202000000) ,
+            'birthdate'         => $this->faker->dateTimeBetween('1960-01-01', '1999-12-31'),
+            'gender'            => $gender,
+            'address'           => $this->faker->streetAddress,
+            'photo'             => $this->faker->imageUrl(),
+            'role'              => 'Editor',      
             'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
+            'password'          => bcrypt('editor'), 
+            'remember_token'    => Str::random(10),            
         ];
     }
 }
