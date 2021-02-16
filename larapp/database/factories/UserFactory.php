@@ -27,6 +27,9 @@ class UserFactory extends Factory
         $ln=$this->faker->lastname();
         $wn=$fn." ".$ln;
         $email=$fn.".".$ln."@".$this->faker->randomElement($array = array('gmail.com', 'misena.edu.co'));
+        $photo = $this->faker->image('public/imgs',640,480,'people');
+        //$photo = $this->faker->imageUrl('public/imgs',640,480,'people');
+        
         return [
             'gender'            =>$gen,     
            //'fullname'          => $this->faker->firstname($gen).faker->lastname($gen),
@@ -39,7 +42,8 @@ class UserFactory extends Factory
             'address'           => $this->faker->streetAddress,
             //'photo'             => $this->faker->imageUrl(storage_path('app/public/imgs'),$width = 640, $height = 480,'people'),
             //'photo'             => $this->faker->imageUrl(storage_path('app/public/imgs')),
-            'photo'             =>'http://lorempixel.com/800/600/people/',
+            //            'photo'             =>'http://lorempixel.com/800/600/people/',
+            'photo'             =>substr($photo,7),
             'role'              => 'Editor',      
             'email_verified_at' => now(),
             'password'          => bcrypt('editor'), 
