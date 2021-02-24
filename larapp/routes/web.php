@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\View;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 /*
@@ -50,3 +51,77 @@ Route::get('reto/{id}', function (Request $request) {
 	//$creado = Carbon::createFromDate($acreado)->age;
 	//Carbon::createFromTimestamp($user->created_at)->week
 });
+
+Route::get('challenge', function () {
+	
+	foreach(App\Models\User::all()->take(10) as $user){
+		$years = Carbon::createFromDate($user->birthdate)->diff()->format("%y years old");
+		$since = Carbon::parse($user->created_at);
+		echo $user->fullname . " - " . $years . " - " . $since->diffForHumans()  . "<br>";
+	}
+});
+
+Route::get('challenge', function () {
+	
+	foreach(App\Models\User::all()->take(10) as $user){
+		$years    = Carbon::createFromDate($user->birthdate)->diff()->format("%y years old");
+		$since    = Carbon::parse($user->created_at);
+		$result[] = $user->fullname . " - " . $years . " - " . $since->diffForHumans()  . "<br>";
+	}
+	dd($result);
+});
+
+Route::get('example', function () {
+	return view('greeting',['name'=>'James']);
+});
+
+Route::get('example1', function () {
+	return view('admin.profile',['name'=>'Santiago']);
+});
+
+Route::get('example2', function () {
+	if (View::exists('admini.profile')) {
+			$users = App\Models\User::take(5)->get();
+			dd($users);
+		}
+		else{
+			$id=99;
+			$user = App\Models\User::find($id);
+			return view('showuser')->with('user',$user);
+		}
+});
+
+Route::get('example3', function () {
+    $id=40;
+    $today = Carbon::now();
+    $info =array();
+    for ($i=$id; $i < $id+10; $i++) { 
+    	$user = App\Models\User::find($i);
+    	$date  = Carbon::createFromTimestamp(strtotime($user->created_at));
+    	$diff_in_weeks=$date->diffInWeeks($today);
+    	$edad = Carbon::createFromDate($user->birthdate)->age;
+    	$info[]=$user->fullname.'-'.$edad.'years old - '.'created '.$diff_in_weeks.' weeks ago';
+    }
+	return view('admin.example3',['information'=>$info[0]]);
+});
+
+Route::get('example4', function () {
+	$i=rand(0,2);
+	return view('admin.example4',['i'=>$i]);	
+});
+
+Route::get('example5', function (Request $request) {
+    $id=45;
+    $user = App\Models\User::find($id);
+    return view('showuser')->with('user',$user);
+});
+
+Route::get('example6', function (Request $request) {//no funciona
+    $id=45;
+    $user = App\Models\User::all();
+    return view('admin.example6',compact('user'));
+});
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
