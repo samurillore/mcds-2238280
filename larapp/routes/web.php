@@ -122,6 +122,11 @@ Route::get('example6', function (Request $request) {//no funciona
     return view('admin.example6',compact('user'));
 });
 
+Route::get('/viewusers', function (Request $request) {
+	$users = App\Models\User::all();
+    return view('viewusers')->with('users',$users);
+});
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
