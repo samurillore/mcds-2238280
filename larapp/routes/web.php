@@ -14,7 +14,8 @@ use Carbon\Carbon;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::redirect('/','/en');
+Route::group(['prefix' =>'{language}'], function(){
 Route::get('/', function () {
     return view('welcome');
 });
@@ -127,10 +128,20 @@ Route::get('/viewusers', function (Request $request) {
     return view('viewusers')->with('users',$users);
 });
 
-Route::get('examples', function () {//no funciona
+Route::get('examples', function () {
     return view('admin.examples');
 });
+
+Route::get('test', function () {
+	App::setLocale('es');
+	if (App::isLocale('es')){
+    	dd(App::getLocale());
+	}
+});
+
+
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+});

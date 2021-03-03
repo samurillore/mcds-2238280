@@ -59,9 +59,9 @@
                 @endswitch
                 <h2>Ciclos</h2>
                 <ul class="pagination justify-content-center">
-                    @for($i=1;$i<=100;$i++)
+                    @for ($i = 1; $i <= 100; $i++)
                         <li class="page item">
-                            <a href="" class="page-link">{{$i}}</a>
+                            <a href="" class="page-link">{{ $i }}</a>
                         </li>
                     @endfor
                 </ul>
