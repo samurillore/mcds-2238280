@@ -127,6 +127,10 @@ Route::get('/viewusers', function (Request $request) {
     return view('viewusers')->with('users',$users);
 });
 
+Route::get('examples', function () {//no funciona
+    return view('admin.examples');
+});
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
